@@ -1,14 +1,17 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
-[Route("api/test")]
-public class TestController : ControllerBase
+namespace AuthService.Controllers
 {
-    [Authorize]
-    [HttpGet]
-    public IActionResult Secret()
+    [ApiController]
+    [Route("api/[controller]")]
+    public class TestController : ControllerBase
     {
-        return Ok("You are authorized!");
+        [Authorize]
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok("You are authorized!");
+        }
     }
 }

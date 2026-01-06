@@ -1,7 +1,9 @@
+using AuthService.DTOs;
+using AuthService.Models;
+using AuthService.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using AuthService.DTOs;
-using AuthService.Services;
+
 
 
 [ApiController]
@@ -29,8 +31,12 @@ public class AuthController : ControllerBase
         if (!result.Succeeded)
             return BadRequest(result.Errors);
 
+        // ✅ Assign default role
+        await _userManager.AddToRoleAsync(user, "User");
+
         return Ok("User registered");
     }
+
 
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDto dto)
@@ -41,7 +47,10 @@ public class AuthController : ControllerBase
         var valid = await _userManager.CheckPasswordAsync(user, dto.Password);
         if (!valid) return Unauthorized();
 
-        var token = _tokenService.CreateToken(user);
+        var roles = await _userManager.GetRolesAsync(user);
+        var token = _tokenService.CreateToken(user, roles);
+
         return Ok(new { token });
     }
+
 }

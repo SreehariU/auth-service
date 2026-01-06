@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 
-public class ApplicationUser : IdentityUser
+namespace AuthService.Models
 {
-    // Extend later if needed (FirstName, RefreshToken, etc.)
+    public class ApplicationUser : IdentityUser
+    {
+        // Extend later if needed (FirstName, RefreshToken, etc.)
+    }
 }

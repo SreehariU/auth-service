@@ -1,18 +1,26 @@
-using Microsoft.IdentityModel.Tokens;
+namespace AuthService.Services;
+using AuthService.Models;
+
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Identity;
 
-namespace AuthService.Services;
 
 public class TokenService
 {
-    public string CreateToken(ApplicationUser user)
+    public string CreateToken(ApplicationUser user, IList<string> roles)
     {
-        var claims = new[]
+        var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Email!)
         };
+
+        foreach (var role in roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
 
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes("SUPER_SECRET_KEY_12345_CHANGE_THIS"));
