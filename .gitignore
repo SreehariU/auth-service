@@ -1,0 +1,16 @@
+# Build output
+bin/
+obj/
+
+# Rider / IDE
+.idea/
+.vs/
+
+# OS files
+.DS_Store
+
+# Local configs & secrets
+appsettings.Development.json
+
+# Logs
+*.log
