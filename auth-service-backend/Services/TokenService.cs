@@ -1,6 +1,6 @@
 namespace AuthService.Services;
 using AuthService.Models;
-
+using System.Security.Cryptography;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -34,4 +34,14 @@ public class TokenService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+   
+
+    public string GenerateRefreshToken()
+    {
+        var randomNumber = new byte[64];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomNumber);
+        return Convert.ToBase64String(randomNumber);
+    }
+
 }

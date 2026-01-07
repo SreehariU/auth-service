@@ -103,8 +103,27 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+builder.Services.AddControllers();
+
+builder.Services.AddScoped<TokenService>(); // 👈 THIS LINE
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 
 var app = builder.Build();
+app.UseCors("FrontendPolicy");
 
 //
 // =========================
@@ -113,6 +132,7 @@ var app = builder.Build();
 //
 if (app.Environment.IsDevelopment())
 {
+    
     app.UseSwagger();
     app.UseSwaggerUI();
 }

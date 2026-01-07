@@ -2,14 +2,14 @@
 bin/
 obj/
 
-# Rider / IDE
+# IDE
 .idea/
 .vs/
 
-# OS files
+# OS
 .DS_Store
 
-# Local configs & secrets
+# Local configs / secrets
 appsettings.Development.json
 
 # Logs

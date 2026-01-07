@@ -4,6 +4,7 @@ namespace AuthService.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        // Extend later if needed (FirstName, RefreshToken, etc.)
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
     }
 }
